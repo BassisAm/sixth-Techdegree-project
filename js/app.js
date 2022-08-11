@@ -3,7 +3,6 @@ const phrase = document.getElementById('phrase');
 const ul = document.querySelector('#phrase ul')
 const showGame = document.getElementById('overlay');
 const startButton = document.querySelector('.btn__reset');
-let ol = document.querySelector('ol');
 var missed = 0;
 
 const phrases = [
@@ -63,14 +62,16 @@ startButton.addEventListener('click', () => {
 
 var buttons = document.getElementsByTagName('button');
 
-keyboard.addEventListener('click', (e) => {
-    var ol = document.querySelector('#scoreboard ol')
-    var clickedButton = e.target
+buttons.addEventListener('click', (e) => {
+    clickedButton = e.target;
     var buttonGuess = checkLetter(clickedButton);
     if (buttonGuess) {
-        e.target.className = 'choosen'
+        e.target.className = 'choosen';
     } else if (buttonGuess = null) {
-        ol.remove()
+        var ol = document.querySelector('#scoreboard ol');
+        var tries = ol.firstChild;
+        ol.remove(tries);
+        missed -= 1;
     }
 });
 
