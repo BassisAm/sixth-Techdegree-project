@@ -64,11 +64,13 @@ startButton.addEventListener('click', () => {
 var buttons = document.getElementsByTagName('button');
 
 keyboard.addEventListener('click', (e) => {
+    var ol = document.querySelector('#scoreboard ol')
     var clickedButton = e.target
-    var buttonGuess = checkLetter(e.target);
+    var buttonGuess = checkLetter(clickedButton);
     if (buttonGuess) {
         e.target.className = 'choosen'
     } else if (buttonGuess = null) {
+        ol.remove()
     }
 });
 
