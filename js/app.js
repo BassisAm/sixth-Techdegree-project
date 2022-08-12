@@ -43,8 +43,8 @@ addPhraseToDisplay(randomPhr);
 const checkLetter = (button) => {
     var items = ul.querySelectorAll('li');
     var match = null;
-    for (let i = 0; i < items.lenght; i++) {
-        if (button.textContent == items[i]) {
+    for (let i = 0; i < items.length; i++) {
+        if (button.textContent == items[i].textContent) {
             items[i].classList.add('show');
             match = button.textContent;
         }
