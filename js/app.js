@@ -26,7 +26,7 @@ const addPhraseToDisplay = (array) => {
     function addLetter(char,cls)  {
         let li = document.createElement('li');
         li.textContent = char;
-        li.className = cls;
+        li.classList.add(cls);
         ul.append(li);
     }
     for (char of array) {
@@ -41,38 +41,52 @@ const addPhraseToDisplay = (array) => {
 addPhraseToDisplay(randomPhr);
 
 const checkLetter = (button) => {
-    var items = ul.getElementsByTagName("li");
+    var items = ul.querySelectorAll('li');
     var match = null;
     for (let i = 0; i < items.lenght; i++) {
-        if (button.textContent === items[i]) {
-            items[i].className = 'show';
+        if (button.textContent == items[i]) {
+            items[i].classList.add('show');
             match = button.textContent;
         }
     }
-    return match
+    return match;
 }
 
 const checkWin = () => {
-    
+    var show = document.getElementsByClassName('show');
+    var letter = document.getElementsByClassName('letter');
+    var headline = document.querySelector('#overlay .title')
+    if (show.length === letter.length) {
+        showGame.style.display =  'flex';
+        showGame.className = 'win';
+        headline.textContent = 'YOU WON!';
+    } else if (missed >= 5) {
+        showGame.style.display =  'flex';
+        showGame.className = 'lose';
+        headline.textContent = 'GAME OVER';
+    }
 }
 
 startButton.addEventListener('click', () => {
     showGame.style.display = 'none';
 });
 
-var buttons = document.getElementsByTagName('button');
 
-buttons.addEventListener('click', (e) => {
-    clickedButton = e.target;
-    var buttonGuess = checkLetter(clickedButton);
-    if (buttonGuess) {
-        e.target.className = 'choosen';
-    } else if (buttonGuess = null) {
-        var ol = document.querySelector('#scoreboard ol');
-        var tries = ol.firstChild;
-        ol.remove(tries);
-        missed -= 1;
+var tries = document.getElementsByTagName('img');
+
+keyboard.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON' && e.target.className != 'chosen') {
+        var clickedButton = e.target;
+        clickedButton.classList.add('chosen');
+        clickedButton.disabled = true;
+        var Guess = checkLetter(clickedButton);
+        if (Guess == null) {
+            tries[missed].src = 'images/lostHeart.png';
+            missed += 1;
+        }
     }
+
+    checkWin();
 });
 
 
